@@ -2,22 +2,31 @@
 
 @page "/"
 
-<MyFirstComponent Values="@Values" @bind-Value="@_value" @bind-Value:after="@OnBindAfter"></MyFirstComponent>
-
+<MyFirstComponent @bind-Value="@_value" @bind-Value:after="@OnBindAfter" Values="@Values"></MyFirstComponent>
 <MyOtherComponent @bind-Value="@_value2" @bind-Value:after="@OnBindAfter2"></MyOtherComponent>
+
+@_bindAferMsg
+@_bindAfer2Msg
+
 
 @code {
     private static readonly string[] Values = new string[] { "TestA", "TestB", "TestC" };
     private string? _value;
     private string? _value2;
 
+    private string? _bindAferMsg;
+    private string? _bindAfer2Msg;
+
     private void OnBindAfter()
     {
-        Console.WriteLine($"This also works, but I cannot hit it on the debugger = {_value}");
+        _bindAferMsg = $"This also works, but I cannot hit it on the debugger = {_value}";
+        Console.WriteLine(_bindAferMsg);
+        StateHasChanged();
     }
 
     private void OnBindAfter2()
     {
-        Console.WriteLine($"This works ok, I can see the output and hit it on the debugger = {_value2}");
+        _bindAfer2Msg = $"This works ok, I can see the output and hit it on the debugger = {_value2}";
+        Console.WriteLine(_bindAfer2Msg);
     }
 }

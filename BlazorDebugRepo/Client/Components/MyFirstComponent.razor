@@ -1,18 +1,22 @@
 ﻿<select @onchange=@OnChangedAsync>
     <option selected></option>
-    @foreach(var item in Values)
+    @foreach (var item in Values)
     {
         <option @key="@item" value="@item">@item</option>
     }
 </select>
 
+@output
+
 <p>@Value</p>
 
 @code {
+    private string? output;
 
 
     private async Task OnChangedAsync(ChangeEventArgs e)
     {
+        output = "OnChanged Called - but cannot break in a debugger";
         Value = e.Value?.ToString();
         await ValueChanged.InvokeAsync(Value);
     }
@@ -24,7 +28,7 @@
     public IEnumerable<string> Values { get; set; } = Enumerable.Empty<string>();
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Parameter]
     public string? Value { get; set; }
