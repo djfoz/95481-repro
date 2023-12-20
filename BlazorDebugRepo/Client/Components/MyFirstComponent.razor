@@ -1,0 +1,37 @@
+﻿<select @onchange=@OnChangedAsync>
+    <option selected></option>
+    @foreach(var item in Values)
+    {
+        <option @key="@item" value="@item">@item</option>
+    }
+</select>
+
+<p>@Value</p>
+
+@code {
+
+
+    private async Task OnChangedAsync(ChangeEventArgs e)
+    {
+        Value = e.Value?.ToString();
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    /// <summary>
+    /// Model Value
+    /// </summary>
+    [Parameter]
+    public IEnumerable<string> Values { get; set; } = Enumerable.Empty<string>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [Parameter]
+    public string? Value { get; set; }
+
+    /// <summary>
+    /// Value Changed callback
+    /// </summary>
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+}

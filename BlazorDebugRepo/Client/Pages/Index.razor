@@ -1,0 +1,23 @@
+﻿@using BlazorDebugRepo.Client.Components
+
+@page "/"
+
+<MyFirstComponent Values="@Values" @bind-Value="@_value" @bind-Value:after="@OnBindAfter"></MyFirstComponent>
+
+<MyOtherComponent @bind-Value="@_value2" @bind-Value:after="@OnBindAfter2"></MyOtherComponent>
+
+@code {
+    private static readonly string[] Values = new string[] { "TestA", "TestB", "TestC" };
+    private string? _value;
+    private string? _value2;
+
+    private void OnBindAfter()
+    {
+        Console.WriteLine($"This also works, but I cannot hit it on the debugger = {_value}");
+    }
+
+    private void OnBindAfter2()
+    {
+        Console.WriteLine($"This works ok, I can see the output and hit it on the debugger = {_value2}");
+    }
+}
